@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+</head>
+
+<body>
+
+{% if username %}
+	<a class="message">Welcome, {{usertype}} {{username}}!</a>
+	<a href="/logout">Logout</a>
+{% else %}
+	<a href="/login">Login</a>
+	<a href="/register">Register</a>
+{% endif %}
+
+<form action="/searchUpcomingFlights" method="POST">
+	<h1>Search flights by city and airport</h1>
+    departure airport:<input type="text" name = "dept_airport" placeholder="e.g. PVG"> </br>
+    departure city:<input type="text" name = "dept_city" placeholder="e.g. Shanghai"> </br>
+    arrival airport:<input type="text" name = "arr_airport" placeholder="e.g. JFK"> </br>
+    arrival city:<input type="text" name = "arr_city" placeholder="e.g. New York City"> </br>
+    departure date: <input type="date" name = "date"> </br>
+	<input type="submit" value = Search /> 
+</form>
+
+<form action="/searchFlightStatus" method="POST">
+	<h1>Check flight status by flight number, arrival/departure date</h1>
+	flight number:<input type="text" name = "flight_num" placeholder="e.g. 123"> </br>
+	departure date:<input type="date" name = "departure_date"> </br>
+	arrival date:<input type="date" name = "arrival_date"> </br>
+	<input type="submit" value = Search />
+</form>
+
+{% if usertype == 'customer' %}
+<form action="/viewMyFlight" method="POST">
+    <h1>Search your flight by source/end city, departure/arrival date</h1>
+    departure airport:<input type="text" name = "dept_airport" placeholder="e.g. PVG"> </br>
+    arrival airport:<input type="text" name = "arr_airport" placeholder="e.g. JFK"> </br>
+    start date:<input type="date" name = "start_date"> </br>
+    end date:<input type="date" name = "end_date"> </br>
+    <input type="submit" value = Search />
+</form>
+
+<a href="/checkSpending">Check my spending</a>
+{% endif %}
+
+{% if usertype == 'booking_agent' %}
+<form action="/viewMyFlightAgent" method="POST">
+    <h1>Search your flight by source/end city, departure/arrival date</h1>
+    departure airport:<input type="text" name = "dept_airport" placeholder="e.g. PVG"> </br>
+    arrival airport:<input type="text" name = "arr_airport" placeholder="e.g. JFK"> </br>
+    start date:<input type="date" name = "start_date"> </br>
+    end date:<input type="date" name = "end_date"> </br>
+    <input type="submit" value = Search />
+</form>
+
+<a href="/checkTop5">Check top customers</a></br>
+<a href="/viewCommission">View my commission</a>
+
+{% endif %}
+
+{% if usertype == 'airline_staff' %}
+<form action="/viewMyFlightStaff" method="POST">
+    <h1>Search flight of your airline by source/end city, departure/arrival date </h1>
+    departure airport:<input type="text" name = "dept_airport" placeholder="e.g. PVG"> </br>
+    arrival airport:<input type="text" name = "arr_airport" placeholder="e.g. JFK"> </br>
+    start date:<input type="date" name = "start_date"> </br>
+    end_date:<input type="date" name = "end_date"> </br>
+    <input type="submit" value = Search />
+</form>
+
+<form action="/createFlight" method="POST">
+    <h1> Create a new flight </h1>
+    flight number:<input type="text" name = "flight_num" placeholder="e.g. 123" /required> </br>
+    departure airport:<input type="text" name = "dept_airport" placeholder="e.g. PVG" /required> </br>
+    arrival airport:<input type="text" name = "arr_airport" placeholder="e.g. JFK" /required> </br>
+    departure time:<input type="datetime-local" name = "dept_time_1" /required> </br>
+    arrival time:<input type="datetime-local" name = "arr_time_1" /required> </br>
+    price:<input type="text" name = "price" placeholder="e.g. 2000" /required> </br>
+    airplane ID:<input type="text" name = "airplane_id" placeholder="e.g. 12345" /required> </br>
+    <input type="submit" value = Create />
+</form>
+
+<form action="/changeFlightStatus" method="POST">
+    <h1>Change Flight Status </h1>
+    flight number:<input type="text" name = "flight_num" placeholder="e.g. 123" /required> </br>
+    new status:<input type="text" name = "new_status" placeholder="e.g. delayed" /required> </br>
+    <input type="submit" value = Update />
+</form>
+
+<form action="/addAirplane" method="POST">
+    <h1>Add Airplane </h1>
+    airplane ID:<input type="text" name = "airplane_id" placeholder="e.g. 1" /required> </br>
+    total seats:<input type="text" name = "seats" placeholder="e.g. 200" /required> </br>
+    <input type="submit" value = Add />
+</form>
+
+<form action="/addAirport" method="POST">
+    <h1>Add Airport </h1>
+    airport name:<input type="text" name = "airport_name" placeholder="e.g. SHA" /required></br>
+    airport city:<input type="text" name = "airport_city" placeholder="e.g. Shanghai" /required> </br>
+    <input type="submit" value = Add />
+</form>
+
+<a href="/checkTop5Agent">Check top booking agents</a></br>
+<a href="{{url_for('viewReport',interval=1) }}">View Report</a></br>
+<a href="/compareRevenue">Comparison of Revenue earned</a></br>
+<a href="/viewFrequentCustomer">Chect the most frequent customer</a></br>
+<a href="/viewTopDestination">Check the most popular destination</a></br>
+{% endif %}
+    
+</body>
+
+</html>
